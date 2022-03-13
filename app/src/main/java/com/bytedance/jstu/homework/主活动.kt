@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class 主活动 : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +39,21 @@ class 主活动 : AppCompatActivity() {
 			"空白\n这条数据怎么才能用来填补屏幕上的空白呢？",
 		))
 		列表框.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
+
+		// 创建进入其他作业的入口。
+		findViewById<FloatingActionButton>(R.id.作业菜单按钮).setOnClickListener {
+			PopupMenu(this, it).apply {
+				mapOf(
+					"ViewPager2" to ItemsListActivity::class,
+					"测试" to 主活动::class,
+				).forEach { 项目 ->
+					menu.add(项目.key).setOnMenuItemClickListener {
+						startActivity(Intent(this@主活动, 项目.value.java))
+						true
+					}
+				}
+			}.show()
+		}
 	}
 
 	class 转接器(private val 数据集: Array<String>) : RecyclerView.Adapter<转接器.ViewHolder>() {

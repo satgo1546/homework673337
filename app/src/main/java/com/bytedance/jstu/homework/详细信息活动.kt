@@ -30,6 +30,7 @@ class 详细信息活动 : AppCompatActivity() {
 						duration = 1000
 						addUpdateListener {
 							val 动画参数 = it.animatedValue as Float
+							// 三次多项式创造先变小后变大再复原的效果。
 							val 缩放 = 1f - 动画参数 * (动画参数 - 1f) * (动画参数 - .5f) * 9f
 							投币.scaleX = 缩放
 							投币.scaleY = 缩放
