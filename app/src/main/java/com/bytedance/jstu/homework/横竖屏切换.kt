@@ -10,7 +10,11 @@ import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import java.io.Serializable
+import kotlin.math.abs
+import kotlin.math.sign
 
 class Item(val title: String, val body: String) : Serializable {
 	override fun toString() = title
@@ -101,26 +105,52 @@ class ItemDetailFragment(private var item: Item? = null) : Fragment() {
 class ItemsListActivity : FragmentActivity(), ItemsListFragment.OnItemSelectedListener {
 	// 判断横竖屏
 	private var isTwoPane = false
+	private var fragmentItemDetail: ViewPager2? = null
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_items)
-		determinePaneLayout()
-	}
-
-	private fun determinePaneLayout() {
-		val fragmentItemDetail = findViewById<FrameLayout>(R.id.flDetailContainer)
+		fragmentItemDetail = findViewById(R.id.flDetailContainer)
 		if (fragmentItemDetail != null) {
 			isTwoPane = true
 			val fragmentItemsList = supportFragmentManager.findFragmentById(R.id.fragmentItemsList) as ItemsListFragment?
 			// 打开内部ListView的激活状态
 			fragmentItemsList!!.setActivateOnItemClick(true)
+
+			// The pager adapter, which provides the pages to the view pager widget.
+			fragmentItemDetail!!.adapter = object : FragmentStateAdapter(this) {
+				override fun getItemCount(): Int = Item.items.size
+				override fun createFragment(position: Int): Fragment = ItemDetailFragment(Item.items[position])
+			}
+			fragmentItemDetail!!.setPageTransformer { view, position ->
+				val MIN_SCALE = 0.85f
+				val MIN_ALPHA = 0.5f
+				view.apply {
+					if (position < -1 || position > 1) {
+						// This page is way off-screen to the left or the right.
+						alpha = 0f
+					} else {
+						// Modify the default slide transition to shrink the page as well
+						val scaleFactor = (1 - abs(position)).coerceAtLeast(MIN_SCALE)
+						val vertMargin = height * (1 - scaleFactor) / 2
+						val horzMargin = width * (1 - scaleFactor) / 2
+						translationX = horzMargin + vertMargin / 2 * sign(position)
+
+						// Scale the page down (between MIN_SCALE and 1)
+						scaleX = scaleFactor
+						scaleY = scaleFactor
+
+						// Fade the page relative to its size.
+						alpha = MIN_ALPHA + (((scaleFactor - MIN_SCALE) / (1 - MIN_SCALE)) * (1 - MIN_ALPHA))
+					}
+				}
+			}
 		}
 	}
 
 	// 当Item被选择的时候回调
 	override fun onItemSelected(i: Item?) {
 		if (isTwoPane) { // single activity with list and detail
-			supportFragmentManager.beginTransaction().replace(R.id.flDetailContainer, ItemDetailFragment(i)).commit()
+			fragmentItemDetail!!.currentItem = Item.items.indexOf(i)
 		} else { // separate activities
 			val intent = Intent(this, ItemDetailActivity::class.java)
 			intent.putExtra("item", i)
