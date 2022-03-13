@@ -45,7 +45,7 @@ class 主活动 : AppCompatActivity() {
 			PopupMenu(this, it).apply {
 				mapOf(
 					"ViewPager2" to ItemsListActivity::class,
-					"测试" to 主活动::class,
+					"时钟" to 时钟活动::class,
 				).forEach { 项目 ->
 					menu.add(项目.key).setOnMenuItemClickListener {
 						startActivity(Intent(this@主活动, 项目.value.java))
