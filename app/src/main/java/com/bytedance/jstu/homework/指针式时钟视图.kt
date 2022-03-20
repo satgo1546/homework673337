@@ -1,22 +1,14 @@
 package com.bytedance.jstu.homework
 
-import android.animation.TimeAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.widget.TextView
 import androidx.core.graphics.withRotation
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.math.PI
 import kotlin.math.atan2
-import kotlin.math.floor
 import kotlin.math.min
 
 class 指针式时钟视图 @JvmOverloads constructor(
@@ -36,7 +28,7 @@ class 指针式时钟视图 @JvmOverloads constructor(
 			// 不能分别指定边框和填充颜色的绘制样式有什么存在的必要吗？
 		}
 		val 表盘数字笔刷 = Paint(Paint.SUBPIXEL_TEXT_FLAG).apply {
-			textSize = 128f
+			textSize = 72f
 			color = Color.WHITE
 			typeface = Typeface.SERIF
 		}
@@ -121,27 +113,5 @@ class 指针式时钟视图 @JvmOverloads constructor(
 			触摸时修改时分秒 = true
 		}
 		return true
-	}
-}
-
-class 时钟活动 : AppCompatActivity() {
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		setContentView(R.layout.shizhonghuodong)
-		val 那个时钟视图 = findViewById<指针式时钟视图>(R.id.时钟视图)
-		val 时间文字 = findViewById<TextView>(R.id.数字时钟文字)
-		TimeAnimator().apply {
-			setTimeListener { _, _, _ ->
-				if (!那个时钟视图.触摸时修改时分秒) 那个时钟视图.当前值 = Calendar.getInstance().let {
-					it.get(Calendar.HOUR) * 3600 + it.get(Calendar.MINUTE) * 60 + it.get(Calendar.SECOND) + it.get(Calendar.MILLISECOND) / 1000f
-				}
-				那个时钟视图.invalidate()
-				时间文字.text = String.format("%02.0f:%02.0f:%02.0f",
-					floor(那个时钟视图.当前值 / 3600f),
-					floor(那个时钟视图.当前值.mod(3600f) / 60f),
-					floor(那个时钟视图.当前值.mod(60f)),
-				)
-			}
-		}.start()
 	}
 }

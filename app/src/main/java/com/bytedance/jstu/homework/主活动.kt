@@ -1,22 +1,23 @@
 package com.bytedance.jstu.homework
 
+import android.animation.TimeAnimator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.util.*
+import kotlin.math.floor
 
 class 主活动 : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_main)
+		setContentView(R.layout.zhuhuodong)
 		val 列表框 = findViewById<RecyclerView>(R.id.列表框)
 		列表框.adapter = 转接器(arrayOf(
 			"A+B问题\n输入两个数，输出它们的和。",
@@ -40,20 +41,35 @@ class 主活动 : AppCompatActivity() {
 		))
 		列表框.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
 
-		// 创建进入其他作业的入口。
-		findViewById<FloatingActionButton>(R.id.作业菜单按钮).setOnClickListener {
-			PopupMenu(this, it).apply {
-				mapOf(
-					"ViewPager2" to ItemsListActivity::class,
-					"时钟" to 时钟活动::class,
-				).forEach { 项目 ->
-					menu.add(项目.key).setOnMenuItemClickListener {
-						startActivity(Intent(this@主活动, 项目.value.java))
-						true
-					}
+		// 时钟app：实现一个电子表，与机械表联动；可以实现切换到手动拨动指针的模式。
+		val 那个时钟视图 = findViewById<指针式时钟视图>(R.id.时钟视图)
+		val 时间文字 = findViewById<TextView>(R.id.数字时钟文字)
+		TimeAnimator().apply {
+			setTimeListener { _, _, _ ->
+				if (!那个时钟视图.触摸时修改时分秒) 那个时钟视图.当前值 = Calendar.getInstance().let {
+					it.get(Calendar.HOUR) * 3600 + it.get(Calendar.MINUTE) * 60 + it.get(Calendar.SECOND) + it.get(Calendar.MILLISECOND) / 1000f
 				}
-			}.show()
+				那个时钟视图.invalidate()
+				时间文字.text = String.format("%02.0f:%02.0f:%02.0f",
+					floor(那个时钟视图.当前值 / 3600f),
+					floor(那个时钟视图.当前值.mod(3600f) / 60f),
+					floor(那个时钟视图.当前值.mod(60f)),
+				)
+			}
+		}.start()
+	}
+
+	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+		super.onCreateOptionsMenu(menu)
+		mapOf(
+			"ViewPager2" to ItemsListActivity::class,
+		).forEach { 项目 ->
+			menu?.add(项目.key)?.setOnMenuItemClickListener {
+				startActivity(Intent(this@主活动, 项目.value.java))
+				true
+			}
 		}
+		return true
 	}
 
 	class 转接器(private val 数据集: Array<String>) : RecyclerView.Adapter<转接器.ViewHolder>() {
