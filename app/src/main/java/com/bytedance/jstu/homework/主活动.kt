@@ -2,10 +2,14 @@ package com.bytedance.jstu.homework
 
 import android.animation.TimeAnimator
 import android.content.Intent
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
@@ -44,6 +48,9 @@ class 主活动 : AppCompatActivity() {
 		// 时钟app：实现一个电子表，与机械表联动；可以实现切换到手动拨动指针的模式。
 		val 那个时钟视图 = findViewById<指针式时钟视图>(R.id.时钟视图)
 		val 时间文字 = findViewById<TextView>(R.id.数字时钟文字)
+		if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+			(那个时钟视图.parent as ViewGroup).visibility = ViewGroup.GONE
+		}
 		TimeAnimator().apply {
 			setTimeListener { _, _, _ ->
 				if (!那个时钟视图.触摸时修改时分秒) 那个时钟视图.当前值 = Calendar.getInstance().let {
@@ -57,10 +64,23 @@ class 主活动 : AppCompatActivity() {
 				)
 			}
 		}.start()
+
+		// 翻译官app：叫词典是因为API也有词典功能……
+		val 词典搜索框 = findViewById<EditText>(R.id.词典搜索框)
+		词典搜索框.setOnEditorActionListener { 搜索框, 动作, _ ->
+			if (动作 != EditorInfo.IME_ACTION_SEARCH) return@setOnEditorActionListener false
+			if (搜索框.text.isNotBlank()) {
+				startActivity(Intent(this@主活动, 词典释义活动::class.java).apply {
+					putExtra("求", 搜索框.text.toString())
+				})
+			}
+			true
+		}
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 		super.onCreateOptionsMenu(menu)
+		// 创建到其他作业活动的链接。
 		mapOf(
 			"ViewPager2" to ItemsListActivity::class,
 		).forEach { 项目 ->
