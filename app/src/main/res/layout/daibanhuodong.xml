@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" android:orientation="vertical">
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_weight="1" android:layout_height="0dp">
+        <TextView
+                android:text="you need a fancy font for a todo list app lol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/待办列表文本视图" android:layout_margin="24dp"
+                android:clickable="true" android:fontFamily="casual"
+                android:textSize="34sp" android:linksClickable="true"
+        />
+    </ScrollView>
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/欲追加的待办事项输入框" android:imeOptions="actionDone" android:fontFamily="casual"/>
+</LinearLayout>

@@ -12,6 +12,9 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.Homework">
         <activity
+                android:name=".待办活动"
+                android:exported="true"/>
+        <activity
                 android:name=".词典释义活动"
                 android:exported="true"/>
         <activity

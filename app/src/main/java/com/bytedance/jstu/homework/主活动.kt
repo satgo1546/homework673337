@@ -83,6 +83,7 @@ class 主活动 : AppCompatActivity() {
 		// 创建到其他作业活动的链接。
 		mapOf(
 			"ViewPager2" to ItemsListActivity::class,
+			"待办" to 待办活动::class,
 		).forEach { 项目 ->
 			menu?.add(项目.key)?.setOnMenuItemClickListener {
 				startActivity(Intent(this@主活动, 项目.value.java))
