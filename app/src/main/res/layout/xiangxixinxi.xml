@@ -19,7 +19,7 @@
         <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/一键三连按钮"
-                android:src="@drawable/ic_dianzan"/>
+                app:srcCompat="@drawable/ic_dianzan"/>
         <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
@@ -58,4 +58,54 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp" android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
             android:textSize="20sp"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <Button
+                android:text="矩阵变换"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/缩放类型按钮零" android:layout_weight="1"
+                />
+        <Button
+                android:text="适应纵横"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/缩放类型按钮一" android:layout_weight="1"
+                />
+        <Button
+                android:text="适应开头"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/缩放类型按钮二" android:layout_weight="1"
+                />
+        <Button
+                android:text="适应中间"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/缩放类型按钮三" android:layout_weight="1"
+                />
+        <Button
+                android:text="适应结尾"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/缩放类型按钮四" android:layout_weight="1"
+                />
+        <Button
+                android:text="居于中央"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/缩放类型按钮五" android:layout_weight="1"
+                />
+        <Button
+                android:text="居中裁剪"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/缩放类型按钮六" android:layout_weight="1"
+                />
+        <Button
+                android:text="居中于内"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/缩放类型按钮七" android:layout_weight="1"
+                />
+    </LinearLayout>
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/图像视图" app:srcCompat="@drawable/wangyoumenzhenshishenmeniaotudouyou"
+            android:background="@color/purple_200"/>
 </LinearLayout>

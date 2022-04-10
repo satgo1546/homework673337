@@ -4,11 +4,13 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Matrix
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
 class 详细信息活动 : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,20 +40,48 @@ class 详细信息活动 : AppCompatActivity() {
 							收藏.scaleY = 缩放
 						}
 					},
-					ObjectAnimator.ofArgb(点赞, "ColorFilter",
+					ObjectAnimator.ofArgb(
+						点赞, "ColorFilter",
 						Color.rgb(97, 102, 109),
 						Color.rgb(0, 174, 236),
 					).setDuration(500),
-					ObjectAnimator.ofArgb(投币, "ColorFilter",
+					ObjectAnimator.ofArgb(
+						投币, "ColorFilter",
 						Color.rgb(97, 102, 109),
 						Color.rgb(0, 174, 236),
 					).setDuration(500),
-					ObjectAnimator.ofArgb(收藏, "ColorFilter",
+					ObjectAnimator.ofArgb(
+						收藏, "ColorFilter",
 						Color.rgb(97, 102, 109),
 						Color.rgb(0, 174, 236),
 					).setDuration(500),
 				)
 			}.start()
+		}
+
+		// 缩放类型按钮事件处理器。
+		val 图像视图 = findViewById<ImageView>(R.id.图像视图)
+		findViewById<Button>(R.id.缩放类型按钮零).setOnClickListener {
+			图像视图.scaleType = ImageView.ScaleType.MATRIX
+			图像视图.imageMatrix = Matrix().apply {
+				setScale(Math.PI.toFloat(), Math.E.toFloat())
+				postRotate(30f)
+			}
+			图像视图.scaleType = ImageView.ScaleType.MATRIX
+		}
+		for ((索引, 按钮) in arrayOf<Button>(
+			findViewById(R.id.缩放类型按钮一),
+			findViewById(R.id.缩放类型按钮二),
+			findViewById(R.id.缩放类型按钮三),
+			findViewById(R.id.缩放类型按钮四),
+			findViewById(R.id.缩放类型按钮五),
+			findViewById(R.id.缩放类型按钮六),
+			findViewById(R.id.缩放类型按钮七),
+		).withIndex()) {
+			val 缩放类型 = ImageView.ScaleType.values()[索引 + 1]
+			按钮.setOnClickListener {
+				图像视图.scaleType = 缩放类型
+			}
 		}
 	}
 }
