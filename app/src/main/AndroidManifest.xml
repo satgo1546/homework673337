@@ -20,6 +20,7 @@
                 android:exported="true"/>
         <activity
                 android:name=".音视频活动"
+                android:configChanges="orientation|uiMode|touchscreen|layoutDirection|screenLayout|screenSize|smallestScreenSize|colorMode|keyboard|keyboardHidden|fontScale|fontWeightAdjustment|density|navigation|mcc|mnc"
                 android:exported="true"/>
         <activity
                 android:name=".待办活动"
