@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="com.bytedance.jstu.homework">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.bytedance.jstu.homework">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -12,7 +13,14 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.Homework"
+            android:name=".我的应用"
             tools:targetApi="lollipop">
+        <activity
+                android:name=".画廊活动"
+                android:exported="true"/>
+        <activity
+                android:name=".音视频活动"
+                android:exported="true"/>
         <activity
                 android:name=".待办活动"
                 android:exported="true"/>

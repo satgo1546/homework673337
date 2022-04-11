@@ -84,6 +84,8 @@ class 主活动 : AppCompatActivity() {
 		mapOf(
 			"ViewPager2" to ItemsListActivity::class,
 			"待办" to 待办活动::class,
+			"多媒体·图片" to 画廊活动::class,
+			"多媒体·视频" to 音视频活动::class,
 		).forEach { 项目 ->
 			menu?.add(项目.key)?.setOnMenuItemClickListener {
 				startActivity(Intent(this@主活动, 项目.value.java))
