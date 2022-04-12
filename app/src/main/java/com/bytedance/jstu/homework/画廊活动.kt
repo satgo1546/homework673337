@@ -14,6 +14,7 @@ class 画廊活动 : AppCompatActivity() {
 		val 图片们 = arrayOf(
 			"https://sjtug.org/images/avatar.png",
 			"https://notes.sjtu.edu.cn/screenshot.png",
+			"http://zy.ysepan.com/f_zy/tp/face2/f5.gif",
 			"https://git.sjtu.edu.cn/img/bg-masthead.jpg",
 			"https://ids.sjtu.edu.cn/static/images/banner_sbg1.png",
 		)
