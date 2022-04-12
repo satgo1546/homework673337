@@ -6,11 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".画廊活动">
-    <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/简单被画者视图"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:placeholderImage="@android:drawable/progress_indeterminate_horizontal"
-            app:placeholderImageScaleType="centerCrop"
-            app:actualImageScaleType="fitCenter"/>
+    <androidx.viewpager2.widget.ViewPager2 android:layout_width="match_parent" android:layout_height="match_parent"
+                                           android:id="@+id/画廊分页器"
+                                           />
 </FrameLayout>

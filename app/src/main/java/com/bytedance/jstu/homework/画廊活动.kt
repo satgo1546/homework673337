@@ -2,13 +2,24 @@ package com.bytedance.jstu.homework
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.facebook.drawee.view.SimpleDraweeView
 
 class 画廊活动 : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.hualanghuodong)
-		val 被画者 = findViewById<SimpleDraweeView>(R.id.简单被画者视图)
-		被画者.setImageURI("https://sjtug.org/images/avatar.png")
+		val 图片们 = arrayOf(
+			"https://sjtug.org/images/avatar.png",
+			"https://notes.sjtu.edu.cn/screenshot.png",
+			"https://git.sjtu.edu.cn/img/bg-masthead.jpg",
+			"https://ids.sjtu.edu.cn/static/images/banner_sbg1.png",
+		)
+		findViewById<ViewPager2>(R.id.画廊分页器).adapter = object : FragmentStateAdapter(this) {
+			override fun getItemCount(): Int = 图片们.size
+			override fun createFragment(位置: Int): Fragment = 画廊片段(图片们[位置])
+		}
 	}
 }
