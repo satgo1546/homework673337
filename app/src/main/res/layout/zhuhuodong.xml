@@ -6,29 +6,31 @@
               android:layout_height="match_parent"
               tools:context=".主活动" android:orientation="vertical">
 
-    <FrameLayout
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:orientation="vertical" android:paddingLeft="24dp"
+                  android:paddingStart="24dp" android:paddingRight="24dp"
+                  android:paddingEnd="24dp" android:paddingTop="32dp"
+                  android:paddingBottom="16dp" android:layout_gravity="center_horizontal"
+                  android:background="@drawable/shizhongbeijing"
+    >
+        <com.bytedance.jstu.homework.指针式时钟视图
+                android:layout_width="240dp"
+                android:layout_height="240dp" android:id="@+id/时钟视图"
+                android:layout_gravity="center"/>
+        <TextView
+                android:text="11:45:14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/数字时钟文字"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="8dp"
+                android:textSize="24sp" android:typeface="serif"
+                android:gravity="center"/>
+    </LinearLayout>
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shizhongbeijing">
-        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:orientation="vertical" android:layout_marginLeft="24dp"
-                      android:layout_marginStart="24dp" android:layout_marginRight="24dp"
-                      android:layout_marginEnd="24dp" android:layout_marginTop="32dp"
-                      android:layout_marginBottom="16dp" android:layout_gravity="center_horizontal">
-            <com.bytedance.jstu.homework.指针式时钟视图
-                    android:layout_width="240dp"
-                    android:layout_height="240dp" android:id="@+id/时钟视图"
-            />
-            <TextView
-                    android:text="11:45:14"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/数字时钟文字"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginTop="8dp"
-                    android:textSize="24sp" android:typeface="serif"
-                    android:gravity="center"/>
-        </LinearLayout>
-    </FrameLayout>
+    </LinearLayout>
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

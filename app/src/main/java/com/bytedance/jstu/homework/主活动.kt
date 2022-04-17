@@ -3,18 +3,19 @@ package com.bytedance.jstu.homework
 import android.animation.TimeAnimator
 import android.content.Intent
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 import kotlin.math.floor
 
@@ -45,6 +46,11 @@ class 主活动 : AppCompatActivity() {
 		))
 		列表框.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
 
+		// 相机需要更多的权限！
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			requestPermissions(arrayOf(android.Manifest.permission.CAMERA), 1)
+		}
+
 		// 时钟app：实现一个电子表，与机械表联动；可以实现切换到手动拨动指针的模式。
 		val 那个时钟视图 = findViewById<指针式时钟视图>(R.id.时钟视图)
 		val 时间文字 = findViewById<TextView>(R.id.数字时钟文字)
@@ -52,15 +58,32 @@ class 主活动 : AppCompatActivity() {
 			(那个时钟视图.parent as ViewGroup).visibility = ViewGroup.GONE
 		}
 		TimeAnimator().apply {
-			setTimeListener { _, _, _ ->
+			val 名言 = arrayOf(
+				"¯\\_(ツ)_/¯",
+				"权限自己去设置里给",
+				"各课作业在右上角⋮里",
+				"_(:з」∠)_",
+				"Google只想限制权限获取",
+				"要是手滑点了拒绝就麻烦了",
+				"应用内即再起不能",
+				"不小心就落到要到设置里的境地",
+				"而且获取了也会被踢回去",
+				"不如一开始就教用户手动授权",
+				"这么说权限流氓也是被逼的吧",
+				"蓝牙要定位，发包要网络",
+				"都是死规定，拦都拦不住",
+				"这就是Android",
+			)
+			setTimeListener { _, 动画已用时间, _ ->
 				if (!那个时钟视图.触摸时修改时分秒) 那个时钟视图.当前值 = Calendar.getInstance().let {
 					it.get(Calendar.HOUR) * 3600 + it.get(Calendar.MINUTE) * 60 + it.get(Calendar.SECOND) + it.get(Calendar.MILLISECOND) / 1000f
 				}
 				那个时钟视图.invalidate()
-				时间文字.text = String.format("%02.0f:%02.0f:%02.0f",
+				时间文字.text = String.format("%02.0f:%02.0f:%02.0f\n%s",
 					floor(那个时钟视图.当前值 / 3600f),
 					floor(那个时钟视图.当前值.mod(3600f) / 60f),
 					floor(那个时钟视图.当前值.mod(60f)),
+					名言[(动画已用时间 / 3000L % 名言.size).toInt()],
 				)
 			}
 		}.start()
@@ -86,6 +109,7 @@ class 主活动 : AppCompatActivity() {
 			"待办" to 待办活动::class,
 			"多媒体·图片" to 画廊活动::class,
 			"多媒体·视频" to 音视频活动::class,
+			"多媒体·相机" to 自定义相机活动::class,
 		).forEach { 项目 ->
 			menu?.add(项目.key)?.setOnMenuItemClickListener {
 				startActivity(Intent(this@主活动, 项目.value.java))
