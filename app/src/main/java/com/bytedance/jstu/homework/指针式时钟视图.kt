@@ -12,10 +12,10 @@ import kotlin.math.atan2
 import kotlin.math.min
 
 class 指针式时钟视图 @JvmOverloads constructor(
-	context: Context,
-	attrs: AttributeSet? = null,
-	defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr) {
+	上下文: Context,
+	属性们: AttributeSet? = null,
+	默认样式属性: Int = 0
+) : View(上下文, 属性们, 默认样式属性) {
 	companion object {
 		val 钟表面笔刷 = Paint().apply {
 			color = Color.argb(24, 255, 255, 255)
@@ -24,7 +24,7 @@ class 指针式时钟视图 @JvmOverloads constructor(
 			color = Color.argb(128, 255, 255, 255)
 			strokeWidth = 3f
 			style = Paint.Style.STROKE
-			// Paint.Style.FILL_AND_STROKE 狗都不用！
+			// Paint.Style.FILL_AND_STROKE，狗都不用！
 			// 不能分别指定边框和填充颜色的绘制样式有什么存在的必要吗？
 		}
 		val 表盘数字笔刷 = Paint(Paint.SUBPIXEL_TEXT_FLAG).apply {
@@ -60,17 +60,17 @@ class 指针式时钟视图 @JvmOverloads constructor(
 	var 触摸时修改时分秒: Boolean = false
 	var 当前值: Float = 0f
 
-	override fun onDraw(canvas: Canvas?) {
-		super.onDraw(canvas)
-		canvas ?: return
-		canvas.translate(width / 2f, height / 2f)
+	override fun onDraw(画布: Canvas?) {
+		super.onDraw(画布)
+		画布 ?: return
+		画布.translate(width / 2f, height / 2f)
 		val r = min(width, height) / 2f
-		canvas.drawCircle(0f, 0f, r, 钟表面笔刷)
-		canvas.drawCircle(0f, 0f, r - 1.5f, 钟表边框笔刷)
+		画布.drawCircle(0f, 0f, r, 钟表面笔刷)
+		画布.drawCircle(0f, 0f, r - 1.5f, 钟表边框笔刷)
 		fun 绘制表盘数字与刻度(字符串: String, 角度: Float) {
 			// 为了绘制时不分配新对象，什么怪语法都整得出来……
 			表盘数字笔刷.getTextBounds(字符串, 0, 字符串.length, 临时矩形)
-			canvas.withRotation(角度) {
+			画布.withRotation(角度) {
 				drawText(字符串, -临时矩形.width() / 2f, -r + 临时矩形.height() + 48f, 表盘数字笔刷)
 				drawLine(0f, -r, 0f, -r + 32f, 粗刻度笔刷)
 				(6..24 step 6).forEach {
@@ -92,22 +92,22 @@ class 指针式时钟视图 @JvmOverloads constructor(
 		绘制表盘数字与刻度("IX", 270f)
 		绘制表盘数字与刻度("X", 300f)
 		绘制表盘数字与刻度("XI", 330f)
-		canvas.withRotation(当前值 / 120) {
+		画布.withRotation(当前值 / 120) {
 			drawLine(0f, 0f, 0f, -r / 3, 时针笔刷)
 		}
-		canvas.withRotation(当前值.mod(3600f) / 10) {
+		画布.withRotation(当前值.mod(3600f) / 10) {
 			drawLine(0f, 0f, 0f, -r / 2, 分针笔刷)
 		}
-		canvas.withRotation(当前值.mod(60f) * 6) {
+		画布.withRotation(当前值.mod(60f) * 6) {
 			drawLine(0f, 0f, 0f, -r * .75f, 秒针笔刷)
 		}
 	}
 
 	@SuppressLint("ClickableViewAccessibility")
-	override fun onTouchEvent(event: MotionEvent?): Boolean {
-		event ?: return false
+	override fun onTouchEvent(事件: MotionEvent?): Boolean {
+		事件 ?: return false
 		if (触摸时修改时分秒) {
-			val 一圈的几分之几 = ((atan2(event.y - height / 2, event.x - width / 2) + PI / 2) / (PI * 2)).mod(1.0).toFloat()
+			val 一圈的几分之几 = ((atan2(事件.y - height / 2, 事件.x - width / 2) + PI / 2) / (PI * 2)).mod(1.0).toFloat()
 			当前值 = 一圈的几分之几 * 43200
 		} else {
 			触摸时修改时分秒 = true

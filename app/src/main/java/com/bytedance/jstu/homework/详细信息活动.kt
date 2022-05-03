@@ -13,8 +13,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class 详细信息活动 : AppCompatActivity() {
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
+	override fun onCreate(保存的实例状态: Bundle?) {
+		super.onCreate(保存的实例状态)
 		setContentView(R.layout.xiangxixinxi)
 
 		// 从意图中提取要显示的文本。

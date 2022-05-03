@@ -26,8 +26,8 @@ class 待办活动 : AppCompatActivity() {
 
 	lateinit var 文本视图: TextView
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
+	override fun onCreate(保存的实例状态: Bundle?) {
+		super.onCreate(保存的实例状态)
 		setContentView(R.layout.daibanhuodong)
 		title = "待办"
 		文本视图 = findViewById(R.id.待办列表文本视图)

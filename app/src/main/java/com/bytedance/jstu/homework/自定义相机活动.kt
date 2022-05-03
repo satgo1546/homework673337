@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import android.view.TextureView
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -33,8 +32,8 @@ class 自定义相机活动 : AppCompatActivity(), SurfaceHolder.Callback {
 	private lateinit var 录制按钮: Button
 	private var 正在录制 = false
 	private var MP4路径 = ""
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
+	override fun onCreate(保存的实例状态: Bundle?) {
+		super.onCreate(保存的实例状态)
 		setContentView(R.layout.zidingyixiangji)
 		表面视图 = findViewById(R.id.相机表面视图)
 		图像视图 = findViewById(R.id.相机图像视图)
@@ -62,8 +61,8 @@ class 自定义相机活动 : AppCompatActivity(), SurfaceHolder.Callback {
 					it.setPreviewDisplay(null)
 					try {
 						it.stop()
-					} catch (e: Exception) {
-						e.printStackTrace()
+					} catch (异: Exception) {
+						异.printStackTrace()
 					}
 					it.reset()
 					it.release()
@@ -97,9 +96,9 @@ class 自定义相机活动 : AppCompatActivity(), SurfaceHolder.Callback {
 					}
 					录制按钮.text = "暂停"
 					正在录制 = !正在录制
-				} catch (e: IllegalStateException) {
+				} catch (异: IllegalStateException) {
 					释放媒体录像机()
-				} catch (e: IOException) {
+				} catch (异: IOException) {
 					释放媒体录像机()
 				}
 			}
@@ -127,32 +126,32 @@ class 自定义相机活动 : AppCompatActivity(), SurfaceHolder.Callback {
 		}
 	}
 
-	override fun surfaceCreated(holder: SurfaceHolder) {
+	override fun surfaceCreated(盒子: SurfaceHolder) {
 		try {
 			相机?.let {
-				it.setPreviewDisplay(holder)
+				it.setPreviewDisplay(盒子)
 				it.startPreview()
 			}
-		} catch (e: IOException) {
-			e.printStackTrace()
+		} catch (异: IOException) {
+			异.printStackTrace()
 		}
 	}
 
-	override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
-		holder.surface ?: return
+	override fun surfaceChanged(盒子: SurfaceHolder, 格式: Int, 宽度: Int, 高度: Int) {
+		盒子.surface ?: return
 		相机?.stopPreview() // 停止预览效果
 		// 重新设置预览效果。
 		try {
 			相机?.let {
-				it.setPreviewDisplay(holder)
+				it.setPreviewDisplay(盒子)
 				it.startPreview()
 			}
-		} catch (e: IOException) {
-			e.printStackTrace()
+		} catch (异: IOException) {
+			异.printStackTrace()
 		}
 	}
 
-	override fun surfaceDestroyed(holder: SurfaceHolder) {
+	override fun surfaceDestroyed(盒子: SurfaceHolder) {
 		相机?.let {
 			it.stopPreview()
 			it.release()
@@ -171,17 +170,17 @@ class 自定义相机活动 : AppCompatActivity(), SurfaceHolder.Callback {
 	}
 
 	companion object {
-		fun rotateImage(bitmap: Bitmap, path: String): Bitmap =
+		fun rotateImage(位图: Bitmap, 路径: String): Bitmap =
 			try {
 				Bitmap.createBitmap(
-					bitmap,
+					位图,
 					0,
 					0,
-					bitmap.width,
-					bitmap.height,
+					位图.width,
+					位图.height,
 					Matrix().apply {
 						postRotate(
-							when (ExifInterface(path).getAttributeInt(
+							when (ExifInterface(路径).getAttributeInt(
 								ExifInterface.TAG_ORIENTATION,
 								ExifInterface.ORIENTATION_NORMAL
 							)) {
@@ -194,9 +193,9 @@ class 自定义相机活动 : AppCompatActivity(), SurfaceHolder.Callback {
 					},
 					true
 				)
-			} catch (e: IOException) {
-				e.printStackTrace()
-				bitmap
+			} catch (异: IOException) {
+				异.printStackTrace()
+				位图
 			}
 	}
 }

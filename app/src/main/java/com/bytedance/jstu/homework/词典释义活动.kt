@@ -2,7 +2,6 @@ package com.bytedance.jstu.homework
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Spanned
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -13,9 +12,9 @@ import java.io.IOException
 import java.net.URLEncoder
 
 class 词典释义活动 : AppCompatActivity() {
-	val httpClient = OkHttpClient.Builder().build()
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
+	val HTTP客户端 = OkHttpClient.Builder().build()
+	override fun onCreate(保存的实例状态: Bundle?) {
+		super.onCreate(保存的实例状态)
 		setContentView(R.layout.cidianshiyi)
 		val 没加载完在转圈 = findViewById<ProgressBar>(R.id.词典内容没加载完)
 		val 内容框 = findViewById<TextView>(R.id.词典内容显示框)
@@ -32,12 +31,12 @@ class 词典释义活动 : AppCompatActivity() {
 		title = 求
 		if (求.isNullOrBlank()) return 加载出了个("没有指定要查什么……")
 
-		httpClient.newCall(
+		HTTP客户端.newCall(
 			Request.Builder()
 				.url("https://dict.youdao.com/jsonapi?q=" + URLEncoder.encode(求, "UTF-8")).build()
 		).enqueue(object : Callback {
 			override fun onResponse(call: Call, response: Response) {
-				if (response.body == null) return
+				response.body ?: return
 				try {
 					// 这种嵌套114514层的JSON，用Gson怎么解析？难道真要照着它的格式，建114514个内部类？
 					// minimal-json用起繁冗数据来就很平常。
@@ -71,8 +70,8 @@ class 词典释义活动 : AppCompatActivity() {
 						结果.appendLine()
 					}
 					加载出了个(HtmlCompat.fromHtml(结果.toString().replace("\n", "<br>"), HtmlCompat.FROM_HTML_OPTION_USE_CSS_COLORS))
-				} catch (异常: NullPointerException) {
-					加载出了个(异常.toString())
+				} catch (异: NullPointerException) {
+					加载出了个(异.toString())
 				}
 			}
 

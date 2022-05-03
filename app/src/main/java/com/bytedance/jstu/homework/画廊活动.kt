@@ -5,11 +5,10 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.facebook.drawee.view.SimpleDraweeView
 
 class 画廊活动 : AppCompatActivity() {
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
+	override fun onCreate(保存的实例状态: Bundle?) {
+		super.onCreate(保存的实例状态)
 		setContentView(R.layout.hualanghuodong)
 		val 图片们 = arrayOf(
 			"https://sjtug.org/images/avatar.png",
